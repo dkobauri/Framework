@@ -26,7 +26,8 @@ describe('Hardcore', () => {
     });
 
     it('5. Activate the COMPUTE ENGINE section at the top of the page', async () => {
-        await CalculatorPage.open();
+        // await CalculatorPage.switchToCalculatorFrame();
+        await CalculatorPage.open()
         await CalculatorPage.computeEngineBtn();
     });
 
@@ -83,7 +84,7 @@ describe('Hardcore', () => {
     });
 
     it('9. In a new tab, open https://10minutemail.com or a similar service for generating temporary emails', async () => {
-        browser.newWindow("https://10minutemail.com");
+        await browser.newWindow("https://yopmail.com/en/");
     });
 
     it('10. Copy the mailing address generated in 10minutemail', async () => {
@@ -91,9 +92,9 @@ describe('Hardcore', () => {
     });
 
     it('11. Return to the calculator, in the Email field enter the address from the previous paragraph', async () => {
+        // await browser.switchWindow('cloud.google.com');
         await browser.switchWindow('cloudpricingcalculator.appspot.com');
         await CalculatorPage.emailInput();
-        await browser.keys(["\uE051",'v']);
     });
 
     it('12. Press SEND EMAIL', async () => {
@@ -101,17 +102,9 @@ describe('Hardcore', () => {
     });
 
     it('13. Wait for the letter with the cost calculation and check that the Total Estimated Monthly Cost in the letter matches what is displayed in the calculator', async () => {
-        browser.switchWindow('10minutemail.com');
-        browser.refresh();
-        await browser.waitUntil(
-            async () => (await $('span[id="inbox_count_number"]').getText()) == '1',
-            {
-                timeout: 30000,
-                timeoutMsg: 'Mail not arrived'
-            }
-        );
+        await browser.switchWindow('yopmail.com');
         await EmailPage.newMail();
+        await EmailPage.switchToMailFrame();
         await EmailPage.monthlyCost();
     });
-
 });

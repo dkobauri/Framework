@@ -3,37 +3,49 @@ const Page = require ('./page');
 class CalculatorPage extends Page{
  
     //page locators:
+
+        // get calculatorFrame() { return $('//iframe[@allow="clipboard-write https://cloud-dot-devsite-v2-prod.appspot.com"]') };
+        // get calculatorSubFrame() { return $('//iframe[@id="myFrame"]') };  
         get calculatorIcon() { return $('//md-pagination-wrapper/md-tab-item[1]') };
-        get instanceInput() { return $('//div/div[1]/form/div[1]/div[1]/md-input-container/input') };
-        get instanceDescription() { return $('//div/div[1]/form/div[2]/div[1]/md-input-container/input') };
-        get operatingSoftwareChoice() { return $('//div/div[1]/form/div[3]/div[1]/md-input-container/md-select') };
-        get operatingSoftwareOption() { return $('//body/div[3]/md-select-menu/md-content/md-option[1]') };
-        get provisioningModelChoice() { return $('//div/div[1]/form/div[4]/div[1]/md-input-container/md-select') };
-        get provisioningModelOption() { return $('//body/div[4]/md-select-menu/md-content/md-option[1]') };
-        get machineTypeChoice() { return $('//div/div[1]/form/div[7]/div[1]/md-input-container/md-select') };
-        get machineTypeOption() { return $('//body/div[5]/md-select-menu/md-content/md-optgroup[3]/md-option[3]') };
+        get instanceInput() { return $('//input[@name="quantity"]') };
+        get instanceDescription() { return $('//input[@id="input_93"]') };
+        get operatingSoftwareChoice() { return $('//md-select[@id="select_105"]') };
+        get operatingSoftwareOption() { return $('//md-option[@id="select_option_94"]') };
+        get provisioningModelChoice() { return $('//md-select[@id="select_109"]') };
+        get provisioningModelOption() { return $('//md-option[@id="select_option_107"]') };
+        get machineTypeChoice() { return $('//md-select[@id="select_119"]') };
+        get machineTypeOption() { return $('//md-option[@id="select_option_270"]') };
         get addGPUCheckBox() { return $('//div/div[2]/form/div[4]/div/md-input-container/md-checkbox') };
-        get gpuTypeChoice() { return $('//div/div[2]/form/div[5]/div/div/div/md-input-container[1]/md-select') };
-        get gpuTypeOption() { return $('//body/div[6]/md-select-menu/md-content/md-option[3]') };
-        get numberOfGPUChoice() { return $('//div/div[2]/form/div[5]/div/div/div/md-input-container[2]/md-select') };
-        get numberOfGPUOption() { return $('//body/div[7]/md-select-menu/md-content/md-option[5]') };
-        get localSSDChoice() { return $('//div/div[2]/form/div[9]/div/md-input-container/md-select') };
-        get localSSDOption() { return $('//body/div[8]/md-select-menu/md-content/md-option[2]') };
-        get datacenterLocationChoice() { return $('//div/div[2]/form/div[11]/div/md-input-container/md-select') };
-        get datacenterLocationOption() { return $('//body/div[9]/md-select-menu/md-content/md-optgroup/md-option[12]') };
-        get commitedUsageChoice() { return $('//div/div[2]/form/div[12]/div/md-input-container/md-select') };
-        get commitedUsageOption() { return $('//body/div[10]/md-select-menu/md-content/md-option[2]') };
+        get gpuTypeChoice() { return $('//md-select[@id="select_424"]') };
+        get gpuTypeOption() { return $('//md-option[@id="select_option_430"]') };
+        get numberOfGPUChoice() { return $('//md-select[@id="select_426"]') };
+        get numberOfGPUOption() { return $('//md-option[@id="select_option_437"]') };
+        get localSSDChoice() { return $('//md-select[@id="select_152"]') };
+        get localSSDOption() { return $('//md-option[@id="select_option_151"]') };
+        get datacenterLocationChoice() { return $('//md-select[@id="select_155"]') };
+        get datacenterLocationOption() { return $('//md-option[@id="select_option_295"]') };
+        get commitedUsageChoice() { return $('//md-select[@id="select_160"]') };
+        get commitedUsageOption() { return $('//md-option[@id="select_option_158"]') };
         get submitBtn() { return $('//div/div[1]/form/div[19]/button') };
-        get estimateResult() { return $('//md-card-content[2]/md-card/md-card-content/div/div/div/md-content/md-list/md-list-item[4]/div[2]') };
-        get emailEstimateBtn() { return $('//md-card-content[2]/md-card/md-card-content/div/div/div/div[3]/button[2]') };
-        get emailInputText() { return $('//form/md-content/div[3]/md-input-container/input') };
-        get sendEmailBtn() { return $('//form/md-dialog-actions/button[2]') };
+        get estimateResult() { return $('//md-content[@id="compute"]/md-list/md-list-item[4]/div[2]') };
+        get emailEstimateBtn() { return $('//button[@id="Email Estimate"]') };
+        get emailInputText() { return $('//input[@id="input_470"]') };
+        get sendEmailBtn() { return $('//button[@aria-label="Send Email"]') };
 
     //page actions
+ 
+        //Frame
+        // async switchToCalculatorFrame() {
+        //     let calculatorFrame = await this.calculatorFrame;                          
+        //     await browser.switchToFrame(calculatorFrame);
+        //     let calculatorSubFrame = await this.calculatorSubFrame;                          
+        //     await browser.switchToFrame(calculatorSubFrame);            
+        // }; 
+        
         //URL
         open(){
             return super.open('https://cloudpricingcalculator.appspot.com/');
-        }  
+        } 
 
         //Header Button
         async computeEngineBtn () {
@@ -115,6 +127,7 @@ class CalculatorPage extends Page{
 
         //Submit
         async submit () {
+            //await browser.switchToParentFrame();
             await this.submitBtn.click();
         } 
 
@@ -141,11 +154,12 @@ class CalculatorPage extends Page{
         async emailInput () {
             await this.emailInputText.waitForDisplayed({ timeout : 5000 });
             await this.emailInputText.click();
+            await browser.keys(["\uE051" + 'v']);
         }
 
         //Send
         async sendEmail () {
-            await browser.pause(3000)
+            await browser.pause(5000);
             await this.sendEmailBtn.click();
         } 
     }

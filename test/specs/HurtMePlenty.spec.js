@@ -25,7 +25,8 @@ describe('Hurt Me Plenty', () => {
     });
 
     it('5. Activate the COMPUTE ENGINE section at the top of the page', async () => {
-        await CalculatorPage.open();
+        // await CalculatorPage.switchToCalculatorFrame();
+        await CalculatorPage.open()
         await CalculatorPage.computeEngineBtn();
     });
 

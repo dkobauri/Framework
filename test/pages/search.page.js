@@ -3,7 +3,7 @@ const Page = require ('./page');
 class SearchPage extends Page{
  
     //page locators:
-        get searchResultBtn() { return $('//div[7]/div/div/div/a') }
+        get searchResultBtn() { return $('//div[@class="gs-title"]//b[contains(text(),"Google Cloud Platform Pricing Calculator")]') }
  
     //page actions
         async searchResult () {

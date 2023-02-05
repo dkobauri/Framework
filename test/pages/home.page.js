@@ -4,8 +4,8 @@ class HomePage extends Page{
  
     //page locators:
         
-        get searchIcon() { return $('div[class="devsite-searchbox"]') };
-        get searchField() { return $('input[name="q"]') };
+        get searchIcon() { return $('//div[@class="devsite-searchbox"]') };
+        get searchField() { return $('//input[@name="q"]') };
  
     //page actions:  
 
