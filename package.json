@@ -20,10 +20,7 @@
   "homepage": "https://github.com/dkobauri/Framework#readme",
   "devDependencies": {
     "@wdio/cli": "^8.3.2",
-<<<<<<< HEAD
     "@wdio/junit-reporter": "^8.3.0",
-=======
->>>>>>> adc5a35890fe7505b63bcf9d15ffabbbaa6f410b
     "@wdio/local-runner": "^8.3.2",
     "@wdio/mocha-framework": "^8.3.0",
     "@wdio/spec-reporter": "^8.3.0",

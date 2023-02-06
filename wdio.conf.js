@@ -137,7 +137,7 @@ exports.config = {
     reporters: [
         'spec',
         ['junit', {
-            outputDir: './report'
+            outputDir: './reports'
         }]
     ],
 
