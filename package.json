@@ -4,7 +4,8 @@
   "description": "Tasks For Stage 2",
   "main": "index.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1",
+    "Hardcore": "wdio wdio.conf.js --suite Hardcore",
+    "HurtMePlenty": "wdio wdio.conf.js --suite HurtMePlenty",
     "wdio": "wdio run ./wdio.conf.js"
   },
   "repository": {
