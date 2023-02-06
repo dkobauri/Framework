@@ -14,7 +14,7 @@ class CalculatorPage extends Page{
         get provisioningModelChoice() { return $('//md-select[@id="select_109"]') };
         get provisioningModelOption() { return $('//md-option[@id="select_option_107"]') };
         get machineTypeChoice() { return $('//md-select[@id="select_119"]') };
-        get machineTypeOption() { return $('//md-option[@id="select_option_270"]') };
+        get machineTypeOption() { return $('//md-option[@id="select_option_271"]') };
         get addGPUCheckBox() { return $('//div/div[2]/form/div[4]/div/md-input-container/md-checkbox') };
         get gpuTypeChoice() { return $('//md-select[@id="select_424"]') };
         get gpuTypeOption() { return $('//md-option[@id="select_option_430"]') };
