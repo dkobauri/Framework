@@ -26,14 +26,14 @@ exports.config = {
         './test/specs/**/*.js'
     ],
     suites:{
-        Hardcore: [
+        Smoke: [
             './test/specs/Hardcore.spec.js'
         ],
-        HurtMePlenty: [
+        Other: [
             './test/specs/HurtMePlenty.spec.js'
         ] 
     },
-    
+
     // Patterns to exclude.
     exclude: [
         // 'path/to/excluded/files'
