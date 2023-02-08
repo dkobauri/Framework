@@ -26,9 +26,7 @@ describe('Hardcore', () => {
     });
 
     it('5. Activate the COMPUTE ENGINE section at the top of the page', async () => {
-        // await CalculatorPage.switchToCalculatorFrame();
-        await CalculatorPage.open()
-        await CalculatorPage.computeEngineBtn();
+        await CalculatorPage.switchToCalculatorFrame();
     });
 
     it('6.1. Fill in the form - Number of instances: 4', async () => {
@@ -47,31 +45,35 @@ describe('Hardcore', () => {
         await CalculatorPage.provisioningModel();
     });
 
-    it('6.5. Fill in the form - Instance type: n1-standard-8 (vCPUs: 8, RAM: 30 GB) <- This option is not available', async () => {
+    it('6.5. Fill in the form - series: N1', async () => {
+        await CalculatorPage.series();
+    });
+
+    it('6.6. Fill in the form - Instance type: n1-standard-8 (vCPUs: 8, RAM: 30 GB)', async () => {
         await CalculatorPage.machineType();
     });
 
-    it('6.6. Fill in the form - Select Add GPUs', async () => {
+    it('6.7. Fill in the form - Select Add GPUs', async () => {
         await CalculatorPage.addGPU();
     });
 
-    it('6.6.1. Fill in the form - GPU type: NVIDIA Tesla V100', async () => {
+    it('6.7.1. Fill in the form - GPU type: NVIDIA Tesla V100', async () => {
         await CalculatorPage.gpuType();
     });
 
-    it('6.6.2. Fill in the form - Number of GPUs: 1 <- This option is not available', async () => {
+    it('6.7.2. Fill in the form - Number of GPUs: 1', async () => {
         await CalculatorPage.numberOfGPUs();
     });
 
-    it('6.7. Fill in the form - Local SSD: 2x375 Gb <- This option is not available', async () => {
+    it('6.8. Fill in the form - Local SSD: 2x375 Gb', async () => {
         await CalculatorPage.localSSD();
     });
 
-    it('6.8. Fill in the form - Datacenter location: Frankfurt (europe-west3)', async () => {
+    it('6.9. Fill in the form - Datacenter location: Frankfurt (europe-west3)', async () => {
         await CalculatorPage.datacenterLocation();
     });
 
-    it('6.9. Fill in the form - Commited usage: 1 Year', async () => {
+    it('6.10. Fill in the form - Commited usage: 1 Year', async () => {
         await CalculatorPage.commitedUsage();
     });
 
@@ -92,8 +94,8 @@ describe('Hardcore', () => {
     });
 
     it('11. Return to the calculator, in the Email field enter the address from the previous paragraph', async () => {
-        // await browser.switchWindow('cloud.google.com');
-        await browser.switchWindow('cloudpricingcalculator.appspot.com');
+        await browser.switchWindow('cloud.google.com');
+        await CalculatorPage.switchToCalculatorFrame();
         await CalculatorPage.emailInput();
     });
 

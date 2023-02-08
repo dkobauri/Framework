@@ -25,9 +25,7 @@ describe('Hurt Me Plenty', () => {
     });
 
     it('5. Activate the COMPUTE ENGINE section at the top of the page', async () => {
-        // await CalculatorPage.switchToCalculatorFrame();
-        await CalculatorPage.open()
-        await CalculatorPage.computeEngineBtn();
+        await CalculatorPage.switchToCalculatorFrame();
     });
 
     it('6.1. Fill in the form - Number of instances: 4', async () => {
@@ -46,31 +44,35 @@ describe('Hurt Me Plenty', () => {
         await CalculatorPage.provisioningModel();
     });
 
-    it('6.5. Fill in the form - Instance type: n1-standard-8 (vCPUs: 8, RAM: 30 GB) <- This option is not available', async () => {
+    it('6.5. Fill in the form - series: N1', async () => {
+        await CalculatorPage.series();
+    });
+
+    it('6.6. Fill in the form - Instance type: n1-standard-8 (vCPUs: 8, RAM: 30 GB)', async () => {
         await CalculatorPage.machineType();
     });
 
-    it('6.6. Fill in the form - Select Add GPUs', async () => {
+    it('6.7. Fill in the form - Select Add GPUs', async () => {
         await CalculatorPage.addGPU();
     });
 
-    it('6.6.1. Fill in the form - GPU type: NVIDIA Tesla V100', async () => {
+    it('6.7.1. Fill in the form - GPU type: NVIDIA Tesla V100', async () => {
         await CalculatorPage.gpuType();
     });
 
-    it('6.6.2. Fill in the form - Number of GPUs: 1 <- This option is not available', async () => {
+    it('6.7.2. Fill in the form - Number of GPUs: 1', async () => {
         await CalculatorPage.numberOfGPUs();
     });
 
-    it('6.7. Fill in the form - Local SSD: 2x375 Gb <- This option is not available', async () => {
+    it('6.8. Fill in the form - Local SSD: 2x375 Gb', async () => {
         await CalculatorPage.localSSD();
     });
 
-    it('6.8. Fill in the form - Datacenter location: Frankfurt (europe-west3)', async () => {
+    it('6.9. Fill in the form - Datacenter location: Frankfurt (europe-west3)', async () => {
         await CalculatorPage.datacenterLocation();
     });
 
-    it('6.9. Fill in the form - Commited usage: 1 Year', async () => {
+    it('6.10. Fill in the form - Commited usage: 1 Year', async () => {
         await CalculatorPage.commitedUsage();
     });
 
@@ -78,11 +80,27 @@ describe('Hurt Me Plenty', () => {
         await CalculatorPage.submit();
     });
 
-    it('8. Check the correspondence of the data of the following fields: VM Class, Instance type, Region, local SSD, commitment term', async () => {
-        await CalculatorPage.checkFieldValues();
+    it('8.1. Check: VM Class', async () => {
+        await CalculatorPage.checkProvisioningModelValue();
+    });
+
+    it('8.2. Check: Instance type', async () => {
+        await CalculatorPage.checkMachineTypeValue();
+    });
+
+    it('8.3. Check: Region', async () => {
+        await CalculatorPage.checkDatacenterLocationValue();
+    });
+
+    it('8.4. Check: local SSD', async () => {
+        await CalculatorPage.checkLocalSSDValue();
+    });
+
+    it('8.5. Check: commitment term', async () => {
+        await CalculatorPage.checkCommitedUsageValue();
     });
 
     it('9. Check that the rental amount per month matches the amount received when passing the test manually.', async () => {
-        await CalculatorPage.estimetedCost();
+        await CalculatorPage.estimatedCost();
     });
 });

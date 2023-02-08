@@ -3,165 +3,200 @@ const Page = require ('./page');
 class CalculatorPage extends Page{
  
     //page locators:
-
-        // get calculatorFrame() { return $('//iframe[@allow="clipboard-write https://cloud-dot-devsite-v2-prod.appspot.com"]') };
-        // get calculatorSubFrame() { return $('//iframe[@id="myFrame"]') };  
-        get calculatorIcon() { return $('//md-pagination-wrapper/md-tab-item[1]') };
-        get instanceInput() { return $('//input[@name="quantity"]') };
-        get instanceDescription() { return $('//input[@id="input_93"]') };
-        get operatingSoftwareChoice() { return $('//md-select[@id="select_105"]') };
-        get operatingSoftwareOption() { return $('//md-option[@id="select_option_94"]') };
-        get provisioningModelChoice() { return $('//md-select[@id="select_109"]') };
-        get provisioningModelOption() { return $('//md-option[@id="select_option_107"]') };
-        get machineTypeChoice() { return $('//md-select[@id="select_119"]') };
-        get machineTypeOption() { return $('//md-option[@id="select_option_270"]') };
-        get addGPUCheckBox() { return $('//div/div[2]/form/div[4]/div/md-input-container/md-checkbox') };
-        get gpuTypeChoice() { return $('//md-select[@id="select_424"]') };
-        get gpuTypeOption() { return $('//md-option[@id="select_option_430"]') };
-        get numberOfGPUChoice() { return $('//md-select[@id="select_426"]') };
-        get numberOfGPUOption() { return $('//md-option[@id="select_option_437"]') };
-        get localSSDChoice() { return $('//md-select[@id="select_152"]') };
-        get localSSDOption() { return $('//md-option[@id="select_option_151"]') };
-        get datacenterLocationChoice() { return $('//md-select[@id="select_155"]') };
-        get datacenterLocationOption() { return $('//md-option[@id="select_option_295"]') };
-        get commitedUsageChoice() { return $('//md-select[@id="select_160"]') };
-        get commitedUsageOption() { return $('//md-option[@id="select_option_158"]') };
-        get submitBtn() { return $('//div/div[1]/form/div[19]/button') };
-        get estimateResult() { return $('//md-content[@id="compute"]/md-list/md-list-item[4]/div[2]') };
-        get emailEstimateBtn() { return $('//button[@id="Email Estimate"]') };
-        get emailInputText() { return $('//input[@id="input_470"]') };
-        get sendEmailBtn() { return $('//button[@aria-label="Send Email"]') };
+    get calculatorFrame() { return $('//iframe[@allow="clipboard-write https://cloud-dot-devsite-v2-prod.appspot.com"]') };
+    get calculatorSubFrame() { return $('#myFrame') };  
+    get calculatorIcon() { return $('md-tab-item.md-tab.ng-scope.ng-isolate-scope.md-ink-ripple.md-active') };
+    get instanceInput() { return $('#input_92') };
+    get instanceDescription() { return $('#input_93') };
+    get operatingSoftwareField() { return $('#select_105') };
+    get operatingSoftwareOption() { return $('#select_option_94') };
+    get provisioningModelField() { return $('#select_109') };
+    get provisioningModelOption() { return $('#select_option_107') };
+    get seriesField() { return $('#select_117') };
+    get seriesOption() { return $('//div[contains(text(), "N1")]') };
+    get machineTypeField() { return $('#select_119') };
+    get machineTypeOption() { return $('//div[contains(text(), "n1-standard-8 (vCPUs: 8, RAM: 30GB)")]') };
+    get addGPUCheckBox() { return $('//md-checkbox[@ng-model="listingCtrl.computeServer.addGPUs"]') };
+    get gpuTypeField() { return $('//md-select[@placeholder="GPU type"]') };
+    get gpuTypeOption() { return $('//div[contains(text(), "NVIDIA Tesla V100")]') };
+    get numberOfGPUField() { return $('//md-select[@placeholder="Number of GPUs"]') };
+    get numberOfGPUOption() { return $('#select_option_479') };
+    get localSSDField() { return $('#select_425') };
+    get localSSDOption() { return $('//div[ contains(text(), "2x375 GB")]') };
+    get datacenterLocationField() { return $('#select_125') };
+    get datacenterLocationOption() { return $('#select_option_230') };
+    get commitedUsageField() { return $('#select_132') };
+    get commitedUsageOption() { return $('#select_option_130') };
+    get submitBtn() { return $('//button[@ng-click="listingCtrl.addComputeServer(ComputeEngineForm);"]') };
+    get estimateVMClassResult() { return $('//div[contains(text(), "Provisioning model:")]') };    
+    get estimateInstanceTypeResult() { return $('//div[contains(text(), "Instance type:")]') };
+    get estimateRegionResult() { return $('//div[contains(text(), "Region:")]') };
+    get estimateLocalSSDResult() { return $('//div[contains(text(), "Local SSD:")]') };
+    get estimateCommitmentTermResult() { return $('//div[contains(text(), "Commitment term:")]') };
+    get estimateCostResult() { return $('//b[contains(text(), "Total Estimated Cost")]') };
+    get emailEstimateBtn() { return $('//button[@title="Email Estimate"]') };
+    get emailInputText() { return $('#input_546') };
+    get sendEmailBtn() { return $('//button[contains(text(), "Send Email")]') };
 
     //page actions
- 
-        //Frame
-        // async switchToCalculatorFrame() {
-        //     let calculatorFrame = await this.calculatorFrame;                          
-        //     await browser.switchToFrame(calculatorFrame);
-        //     let calculatorSubFrame = await this.calculatorSubFrame;                          
-        //     await browser.switchToFrame(calculatorSubFrame);            
-        // }; 
+    //Frame
+    async switchToCalculatorFrame() {
+        let calculatorFrame = await this.calculatorFrame;                          
+        await browser.switchToFrame(calculatorFrame);
+        let calculatorSubFrame = await this.calculatorSubFrame;                          
+        await browser.switchToFrame(calculatorSubFrame);            
+    }; 
         
-        //URL
-        open(){
-            return super.open('https://cloudpricingcalculator.appspot.com/');
-        } 
+    //Header Button
+    async computeEngineBtn () {
+        await this.calculatorIcon.waitForDisplayed({ timeout : 5000 });
+        await this.calculatorIcon.click();
+    };
 
-        //Header Button
-        async computeEngineBtn () {
-            await this.calculatorIcon.waitForDisplayed({ timeout : 5000 });
-            await this.calculatorIcon.click();
-        }
+    //Field #1
+    async numberOfInstances (num) {
+        await this.instanceInput.setValue(num);
+    };
 
-        //Field #1
-        async numberOfInstances (num) {
-            await this.instanceInput.setValue(num);
-        }
+    //Field #2
+    async whatAreTheseInstancesFor (txt) {
+        await this.instanceDescription.setValue(txt);
+    };
 
-        //Field #2
-        async whatAreTheseInstancesFor (txt) {
-            await this.instanceDescription.setValue(txt);
-        }
+    //Field #3
+    async operatingSystem () {
+        await this.operatingSoftwareField.click();
+        await this.operatingSoftwareOption.waitForDisplayed({ timeout : 5000 });
+        await this.operatingSoftwareOption.click();
+    };
 
-        //Field #3
-        async operatingSystem () {
-            await this.operatingSoftwareChoice.click();
-            await this.operatingSoftwareOption.waitForDisplayed({ timeout : 5000 });
-            await this.operatingSoftwareOption.click();
-        } 
+    //Field #4
+    async provisioningModel () {
+        await this.provisioningModelField.click();
+        await this.provisioningModelOption.waitForDisplayed({ timeout : 5000 });
+        await this.provisioningModelOption.click();
+    };
 
-        //Field #4
-        async provisioningModel () {
-            await this.provisioningModelChoice.click();
-            await this.provisioningModelOption.waitForDisplayed({ timeout : 5000 });
-            await this.provisioningModelOption.click();
-        } 
+    //Field #5
+    async series () {
+        await this.seriesField.click();
+        await this.seriesOption.waitForDisplayed({ timeout : 5000 });
+        await this.seriesOption.click();
+    };
 
-        //Field #5
-        async machineType () {
-            await this.machineTypeChoice.click();
-            await this.machineTypeOption.waitForDisplayed({ timeout : 5000 });
-            await this.machineTypeOption.click();
-        } 
+    //Field #6
+    async machineType () {
+        await this.machineTypeField.click();
+        await this.machineTypeOption.waitForDisplayed({ timeout : 5000 });
+        await this.machineTypeOption.click();
+    };
 
-        //Field #6
-        async addGPU () {
-            await this.addGPUCheckBox.click();
-        } 
-        //Field #7
-        async gpuType () {
-            await this.gpuTypeChoice.waitForDisplayed({ timeout : 5000 });
-            await this.gpuTypeChoice.click();
-            await this.gpuTypeOption.waitForDisplayed({ timeout : 5000 });
-            await this.gpuTypeOption.click();
-        } 
+    //Field #7
+    async addGPU () {
+        const addGPUCheckBoxElement = await this.addGPUCheckBox;
+        await addGPUCheckBoxElement.scrollIntoView({ block: 'center', inline: 'center' });
+        await this.addGPUCheckBox.click();
+    };
+    
+    //Field #8
+    async gpuType () {
+        await this.gpuTypeField.waitForDisplayed({ timeout : 5000 });
+        await this.gpuTypeField.click();
+        await this.gpuTypeOption.waitForDisplayed({ timeout : 5000 });
+        await this.gpuTypeOption.click();
+    };
 
-        //Field #8
-        async numberOfGPUs () {
-            await this.numberOfGPUChoice.waitForDisplayed({ timeout : 5000 });
-            await this.numberOfGPUChoice.click();
-            await this.numberOfGPUOption.waitForDisplayed({ timeout : 5000 });
-            await this.numberOfGPUOption.click();
-        } 
+    //Field #9
+    async numberOfGPUs () {
+        await this.numberOfGPUField.waitForDisplayed({ timeout : 5000 });
+        await this.numberOfGPUField.click();
+        await this.numberOfGPUOption.waitForDisplayed({ timeout : 5000 });
+        await this.numberOfGPUOption.click();
+    };
 
-        //Field #9
-        async localSSD () {
-            await this.localSSDChoice.click();
-            await this.localSSDOption.waitForDisplayed({ timeout : 5000 });
-            await this.localSSDOption.click();
-        } 
+    //Field #10
+    async localSSD () {
+        await this.localSSDField.click();
+        await this.localSSDOption.waitForDisplayed({ timeout : 5000 });
+        await this.localSSDOption.click();
+    }; 
 
-        //Field #10
-        async datacenterLocation () {
-            await this.datacenterLocationChoice.click();
-            await this.datacenterLocationOption.waitForDisplayed({ timeout : 5000 });
-            await this.datacenterLocationOption.click();
-        } 
+    //Field #11
+    async datacenterLocation () {
+        const datacenterLocationFieldElement = await this.datacenterLocationField;
+        await datacenterLocationFieldElement.scrollIntoView({ block: 'center', inline: 'center' });
+        await this.datacenterLocationField.click();
+        await this.datacenterLocationOption.waitForDisplayed({ timeout : 5000 });
+        await this.datacenterLocationOption.click();
+    }; 
 
-        //Field #11
-        async commitedUsage () {
-            await this.commitedUsageChoice.click();
-            await this.commitedUsageOption.waitForDisplayed({ timeout : 5000 });
-            await this.commitedUsageOption.click();
-        } 
+    //Field #12
+    async commitedUsage () {
+        const commitedUsageFieldElement = await this.commitedUsageField;
+        await commitedUsageFieldElement.scrollIntoView({ block: 'center', inline: 'center' });
+        await this.commitedUsageField.click();
+        await this.commitedUsageOption.waitForDisplayed({ timeout : 5000 });
+        await this.commitedUsageOption.click();
+    };
 
-        //Submit
-        async submit () {
-            //await browser.switchToParentFrame();
-            await this.submitBtn.click();
-        } 
+    //Submit
+    async submit () {
+        
+        await this.submitBtn.click();
+    }; 
 
-        //Check
-        async checkFieldValues () {
-            expect(await this.provisioningModelChoice.getText()).toEqual('Regular');
-            expect(await this.machineTypeChoice.getText()).toEqual('n1-standard-8 (vCPUs: 8, RAM: 30 GB)');
-            expect(await this.localSSDChoice.getText()).toEqual('2x375 Gb');
-            expect(await this.datacenterLocationChoice.getText()).toEqual('Frankfurt (europe-west3)');
-            expect(await this.commitedUsageChoice.getText()).toEqual('1 Year');
-        } 
+    //Check 1
+    async checkProvisioningModelValue () {
+        await expect(this.estimateVMClassResult).toHaveTextContaining('Regular');
+    }; 
 
-        //Result
-        async estimetedCost () {
-            expect(await this.estimateResult.getText()).toEqual('USD 782.69');
-        } 
+    //Check 2
+    async checkMachineTypeValue () {
+        await expect(this.estimateInstanceTypeResult).toHaveTextContaining('n1-standard-8');
+    }; 
 
-        //Email
-        async emailEstimate () {
-            await this.emailEstimateBtn.click();
-        } 
+    //Check 3
+    async checkLocalSSDValue () {
+        await expect(this.estimateLocalSSDResult).toHaveTextContaining('2x375 GiB');
+    }; 
 
-        //Field #12
-        async emailInput () {
-            await this.emailInputText.waitForDisplayed({ timeout : 5000 });
-            await this.emailInputText.click();
-            await browser.keys(["\uE051" + 'v']);
-        }
+    //Check 4
+    async checkDatacenterLocationValue () {
+        await expect(this.estimateRegionResult).toHaveTextContaining('Frankfurt');
+    }; 
 
-        //Send
-        async sendEmail () {
-            await browser.pause(5000);
-            await this.sendEmailBtn.click();
-        } 
-    }
+    //Check 5
+    async checkCommitedUsageValue () {
+        await expect(this.estimateCommitmentTermResult).toHaveTextContaining('1 Year');
+    }; 
+
+    //Result
+    async estimatedCost () {
+        await expect(this.estimateCostResult).toHaveTextContaining('USD 1,081.20');
+    }; 
+
+    //Email
+    async emailEstimate () {
+        const emailEstimateBtnElement = await this.emailEstimateBtn;
+        await emailEstimateBtnElement.scrollIntoView({ block: 'center', inline: 'center' });
+        await this.emailEstimateBtn.click();
+
+    }; 
+
+    //Field #12
+    async emailInput () {
+        const ctrlKeyCode = "\uE051";
+        await this.emailInputText.waitForDisplayed({ timeout : 5000 });
+        await this.emailInputText.click();
+        await browser.keys([ctrlKeyCode + 'v']);
+    };
+
+    //Send
+    async sendEmail () {
+        const sendEmailBtnElement = await this.sendEmailBtn;
+        await sendEmailBtnElement.scrollIntoView({ block: 'center', inline: 'center' });
+        await this.sendEmailBtn.click();
+    };
+}
  
 module.exports = new CalculatorPage();
