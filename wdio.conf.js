@@ -257,7 +257,8 @@ exports.config = {
       ) {
         // take a screenshot anytime a test fails and throws an error
         if (error) {
-          browser.takeScreenshot(); 
+            let time = (new Date()).toString().slice(4, 24).replaceAll(" ", "-").replaceAll(":", "-");
+            browser.saveScreenshot(`./screenshots/${ time }.png`); 
         }
       },
 
